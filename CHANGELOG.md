@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.1 — Learn from repeated corrections
 
 ### Added
 
