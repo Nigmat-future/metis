@@ -1,0 +1,32 @@
+<svg width="520" height="132" viewBox="0 0 520 132" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Metis wordmark</title>
+  <desc id="desc">Metis horizontal lockup: faceted engine mark, METIS wordmark, and the tagline "history is your config".</desc>
+  <defs>
+    <linearGradient id="bronzeEdge2" x1="20" y1="22" x2="92" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#D8BC84"/>
+      <stop offset="1" stop-color="#9C7A4A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- mark, scaled into 8..124 box -->
+  <g transform="translate(8,8) scale(0.6)">
+    <path d="M96 18L157.487 53.5V124.5L96 160L34.5128 124.5V53.5L96 18Z" fill="#0E1116"/>
+    <path d="M96 18L157.487 53.5V124.5L96 160L34.5128 124.5V53.5L96 18Z" stroke="url(#bronzeEdge2)" stroke-width="3"/>
+    <path d="M96 34L143.765 61.5V116.5L96 144L48.2346 116.5V61.5L96 34Z" stroke="#C7A76A" stroke-opacity="0.18" stroke-width="2"/>
+    <path d="M62 119V65L81.8 94.4L96 70.8L110.2 94.4L130 65V119" stroke="#D2B375" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M55 139H137" stroke="#C7A76A" stroke-width="5" stroke-linecap="round"/>
+    <path d="M73 139H119" stroke="#6FB68A" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="61" cy="54" r="4" fill="#6FB68A"/>
+    <circle cx="96" cy="44" r="4" fill="#E6EAF0"/>
+    <circle cx="131" cy="54" r="4" fill="#C7A76A"/>
+    <path d="M61 54L81.8 94.4M96 44V70.8M131 54L110.2 94.4" stroke="#C7A76A" stroke-opacity="0.22" stroke-width="2"/>
+  </g>
+
+  <!-- wordmark: Geist-style, letter-spaced -->
+  <text x="138" y="62" font-family="Geist, 'Inter Tight', system-ui, sans-serif" font-size="46" font-weight="600" letter-spacing="6" fill="#E6EAF0">METIS</text>
+  <!-- tagline: mono, muted -->
+  <text x="140" y="92" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="15" letter-spacing="0.5" fill="#9AA7B8">history is your config</text>
+  <!-- bronze rule accent under wordmark, echoing the mark -->
+  <path d="M140 104H300" stroke="#C7A76A" stroke-width="2" stroke-linecap="round"/>
+  <path d="M140 104H210" stroke="#6FB68A" stroke-width="2" stroke-linecap="round"/>
+</svg>

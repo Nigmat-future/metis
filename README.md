@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="docs/assets/metis-logo.svg" alt="Metis logo" width="132" />
-
-# Metis
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/metis-wordmark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="docs/assets/metis-wordmark-light.svg" />
+  <img src="docs/assets/metis-wordmark.svg" alt="Metis — history is your config" width="420" />
+</picture>
 
 ### The local rule engine for coding agents that need taste, memory, and restraint.
 

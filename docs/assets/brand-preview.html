@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metis 品牌预览 · 静默谋士</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: dark;
+    /* primitive */
+    --ink-900:#0E1116; --ink-800:#161B22; --ink-700:#1E242E; --ink-600:#243041;
+    --bronze-400:#D8BC84; --bronze-500:#C7A76A; --bronze-600:#9C7A4A;
+    --olive-400:#6FB68A; --paper:#E6EAF0; --muted:#9AA7B8; --danger:#E56F6F;
+    /* semantic */
+    --bg:var(--ink-900); --surface:var(--ink-800); --surface-2:var(--ink-700);
+    --border:var(--ink-600); --text:var(--paper); --text-muted:var(--muted);
+    --primary:var(--bronze-500); --primary-hi:var(--bronze-400); --accent:var(--olive-400);
+    --radius-sm:6px; --radius-md:10px; --radius-lg:14px;
+    --space-md:16px; --space-lg:24px; --space-xl:40px;
+    --font-head:'Inter Tight','Geist',system-ui,sans-serif;
+    --font-body:'Inter Tight','Geist',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.55;
+    -webkit-font-smoothing:antialiased;padding:var(--space-xl);max-width:1080px;margin:0 auto;}
+  h1,h2,h3{font-family:var(--font-head);line-height:1.2;letter-spacing:-0.01em;}
+  h1{font-size:2rem;font-weight:600;margin:0 0 4px;}
+  h2{font-size:0.82rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--text-muted);margin:48px 0 16px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+  .sub{color:var(--text-muted);font-family:var(--font-mono);font-size:0.9rem;margin-bottom:8px;}
+  .grid{display:grid;gap:var(--space-md);}
+  .cols-2{grid-template-columns:1fr 1fr;}
+  .cols-3{grid-template-columns:repeat(3,1fr);}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:var(--space-lg);}
+  .logo-stage{background:var(--ink-900);border:1px solid var(--border);border-radius:var(--radius-lg);
+    padding:40px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
+  .logo-stage.light{background:#F5F3EE;}
+  .swatch{height:88px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.06);
+    display:flex;align-items:flex-end;padding:10px;font-family:var(--font-mono);font-size:0.72rem;}
+  .chip-row{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap;}
+  .btn{font-family:var(--font-body);font-weight:500;font-size:0.9rem;padding:9px 16px;border-radius:var(--radius-sm);
+    border:1px solid transparent;cursor:pointer;transition:background 160ms ease,border-color 160ms ease;}
+  .btn-primary{background:var(--primary);color:#0E1116;}
+  .btn-primary:hover{background:var(--primary-hi);}
+  .btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+  .btn-ghost:hover{border-color:var(--primary);}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .badge{font-family:var(--font-mono);font-size:0.72rem;padding:3px 9px;border-radius:999px;}
+  .badge-ok{background:#13241B;color:var(--olive-400);}
+  .badge-fail{background:#2A1717;color:var(--danger);}
+  code,pre{font-family:var(--font-mono);font-size:0.84rem;}
+  pre{background:var(--ink-900);border:1px solid var(--border);border-radius:var(--radius-sm);
+    padding:14px 16px;overflow:auto;color:var(--paper);}
+  .tok{color:var(--accent);}
+  .type-row{padding:10px 0;border-bottom:1px solid var(--border);}
+  .type-row:last-child{border:0;}
+  .meta{font-family:var(--font-mono);font-size:0.7rem;color:var(--text-muted);}
+</style>
+</head>
+<body>
+  <div class="sub">METIS · 品牌系统 v1.0 · 方向 A 静默谋士 / Quiet Counsel</div>
+  <h1>history is your config</h1>
+  <p style="color:var(--text-muted);max-width:60ch;">本地规则引擎的视觉系统。克制、精确、可信赖——和产品对待 agent 指令的态度一致。无渐变,无辉光,单一青铜金签名色。</p>
+
+  <h2>Logo · 双形态</h2>
+  <div class="logo-stage">
+    <img src="metis-logo.svg" alt="Metis mark" width="120" height="120">
+    <img src="metis-wordmark.svg" alt="Metis wordmark" width="380">
+  </div>
+  <div style="height:12px"></div>
+  <div class="logo-stage light">
+    <img src="metis-logo.svg" alt="Metis mark on light" width="120" height="120">
+    <img src="metis-wordmark-light.svg" alt="Metis wordmark on light" width="380">
+  </div>
+  <p class="meta">上:深色底(主)。下:浅色底测试——mark 自带墨黑外壳,在浅底依然成立。隐喻:顶部 3 个散点(本地痕迹)→ 收束进 M 字标 → 沉淀为底部那条青铜规则线。</p>
+
+  <h2>配色 · 青铜金体系</h2>
+  <div class="grid cols-3">
+    <div class="swatch" style="background:#0E1116;color:#E6EAF0">#0E1116 · bg 墨黑</div>
+    <div class="swatch" style="background:#161B22;color:#E6EAF0">#161B22 · surface</div>
+    <div class="swatch" style="background:#243041;color:#E6EAF0">#243041 · border</div>
+    <div class="swatch" style="background:#C7A76A;color:#0E1116">#C7A76A · primary 8.25:1</div>
+    <div class="swatch" style="background:#6FB68A;color:#0E1116">#6FB68A · accent 7.87:1</div>
+    <div class="swatch" style="background:#E56F6F;color:#0E1116">#E56F6F · danger</div>
+  </div>
+
+  <h2>字体 · Geist + JetBrains Mono</h2>
+  <div class="card">
+    <div class="type-row"><div style="font-family:var(--font-head);font-size:2rem;font-weight:600;">Metis turns corrections into rules</div><div class="meta">标题 · Geist Semibold 32px · -0.01em</div></div>
+    <div class="type-row"><div style="font-size:1rem;">A calm local review room for the lessons you keep repeating. Scan, plan, diff, approve, rollback.</div><div class="meta">正文 · Geist Regular 16px / 1.55</div></div>
+    <div class="type-row"><div style="font-family:var(--font-mono);font-size:0.95rem;color:var(--accent);">metis init --dry-run &nbsp; <span style="color:var(--text-muted)">&lt;!-- METIS:BEGIN --&gt;</span></div><div class="meta">强调/代码 · JetBrains Mono</div></div>
+  </div>
+
+  <h2>组件示例</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">candidate · run-tests-first</div>
+      <div style="font-weight:500;margin-bottom:6px;">Run the real test command before answering.</div>
+      <div class="chip-row">
+        <span class="badge badge-ok">audit pass</span>
+        <span class="badge" style="background:var(--surface-2);color:var(--primary)">confidence 0.82</span>
+        <span class="badge" style="background:var(--surface-2);color:var(--text-muted)">→ CLAUDE.md</span>
+      </div>
+      <div class="chip-row"><button class="btn btn-primary">Preview diff</button><button class="btn btn-ghost">Skip</button></div>
+    </div>
+    <div class="card">
+      <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">dry-run diff</div>
+<pre>  <span class="tok">&lt;!-- METIS:BEGIN --&gt;</span>
++ Always run <span class="tok">npm test</span> before
++ claiming a fix works.
+  <span class="tok">&lt;!-- METIS:END --&gt;</span></pre>
+      <div class="chip-row"><span class="badge badge-fail">no writes yet</span></div>
+    </div>
+  </div>
+
+  <h2>TUI 标志(终端形态)</h2>
+  <div class="card">
+<pre style="line-height:1.4;color:var(--primary);">        <span style="color:var(--text-muted)">·  ·  ·  ·  ·</span>
+          <span style="color:var(--border)">\   |   /</span>
+       <span style="color:var(--primary-hi)">═══ METIS ═══</span>
+    <span style="color:var(--text-muted)">history is your config</span></pre>
+  </div>
+</body>
+</html>
