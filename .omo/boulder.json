@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "active_work_id": null,
+  "works": {
+    "personal-coding-agent-usable-mvp": {
+      "work_id": "personal-coding-agent-usable-mvp",
+      "active_plan": ".omo/plans/personal-coding-agent-usable-mvp.md",
+      "plan_name": "personal-coding-agent-usable-mvp",
+      "session_ids": ["codex:root"],
+      "status": "completed",
+      "worktree_path": null
+    },
+    "metis-terminal-first-tui-gui": {
+      "work_id": "metis-terminal-first-tui-gui",
+      "active_plan": ".omo/plans/metis-terminal-first-tui-gui.md",
+      "plan_name": "metis-terminal-first-tui-gui",
+      "session_ids": ["codex:root"],
+      "status": "completed",
+      "worktree_path": null
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "metis",
+  "version": "0.3.0",
+  "description": "Local-first personal coding agent scaffold manager.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "metis": "./bin/metis.js",
+    "pca": "./bin/pca.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "docs/",
+    "README.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "check:docs": "node scripts/check-docs.js",
+    "check:syntax": "node scripts/check-syntax.js",
+    "check:loc": "node scripts/check-loc.js",
+    "check:no-network": "node scripts/check-no-network.js",
+    "check:package": "node scripts/check-package.js",
+    "check": "npm run check:syntax && npm run check:loc && npm run check:no-network && npm run check:docs && npm test && npm run check:package",
+    "smoke:install": "node scripts/install-smoke.js",
+    "qa:product": "node scripts/product-qa.js",
+    "evidence:release": "node scripts/release-evidence.js",
+    "ci:local": "node scripts/local-ci.js",
+    "prepublishOnly": "npm run check"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

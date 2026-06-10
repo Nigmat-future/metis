@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": ["Read"]
+  },
+  "mcpServers": {
+    "local": {
+      "command": "node"
+    }
+  }
+}

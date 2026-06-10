@@ -1,0 +1,4 @@
+plan
+save-proposal --yes
+proposal-dismiss latest
+quit

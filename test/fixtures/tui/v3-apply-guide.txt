@@ -1,0 +1,4 @@
+select-menu 1
+select-rail diff
+apply
+cancel-apply

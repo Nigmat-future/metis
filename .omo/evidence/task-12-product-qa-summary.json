@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-08T11:15:40.702Z",
+  "scenarios": [
+    {
+      "name": "cli-scan",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "cli-plan",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "cli-init-dry-run",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "cli-evolve-dry-run",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "cli-proposal-save",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "tui-dry-run",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "tui-width-welcome",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "tui-proposal",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "gui-preview",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "sensitive-scan",
+      "status": "pass",
+      "exitCode": 0
+    },
+    {
+      "name": "sensitive-tui",
+      "status": "pass",
+      "exitCode": 1
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+Metis: scanning local agent evidence...
+
+Root: .
+
+Found:
+  ev_000001 codex        instruction-file     present - Codex instruction file at depth 0
+  ev_000002 codex        session-inventory    present - 1 Codex session file(s), content not read by default
+  ev_000003 codex        settings             present - Codex JSON config shape; top-level keys: [redacted-key], [redacted-host]
+  ev_000004 project      package              present - package.json shape; top-level keys: name, scripts
+  ev_000005 project      project-script       present - package script test: echo [redacted:api-key] [redacted:private-host] ~ ~
+
+Summary:
+  Evidence items   5
+  Claude Code      0
+  Codex            3
+  Project          2
+  History snippets 0
+  Content display  metadata and redacted excerpts only
+
+Redaction:
+  raw values       not displayed
+  hooks/skills     counted only, never executed
+  remote calls     disabled
+  telemetry        disabled
+
+Writes: none

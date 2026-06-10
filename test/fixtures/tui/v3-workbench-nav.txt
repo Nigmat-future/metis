@@ -1,0 +1,4 @@
+select-menu 1
+focus-zone rail
+select-rail diff
+quit

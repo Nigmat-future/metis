@@ -1,0 +1,3 @@
+plan
+preview-diff
+confirm-apply APPLY METIS

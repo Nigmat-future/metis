@@ -1,0 +1,6 @@
+{
+  "name": "sensitive-metadata-project",
+  "scripts": {
+    "test": "echo sk-pca-fake-secret internal.customer.example C:\\Users\\VeryPrivateName /Users/very-private-name"
+  }
+}

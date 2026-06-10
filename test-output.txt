@@ -1,0 +1,507 @@
+
+> metis@0.3.0 test
+> node --test
+
+TAP version 13
+# Subtest: codex AGENTS content derives language and verification candidates
+ok 1 - codex AGENTS content derives language and verification candidates
+  ---
+  duration_ms: 176.5096
+  type: 'test'
+  ...
+# Subtest: evolve dry-run blocks high-risk evidence
+ok 2 - evolve dry-run blocks high-risk evidence
+  ---
+  duration_ms: 139.6549
+  type: 'test'
+  ...
+# Subtest: evolve proposals include evidence ids and per-change token impact
+ok 3 - evolve proposals include evidence ids and per-change token impact
+  ---
+  duration_ms: 385.3737
+  type: 'test'
+  ...
+# Subtest: adapter scanAll returns real evidence instead of adapter warnings
+ok 4 - adapter scanAll returns real evidence instead of adapter warnings
+  ---
+  duration_ms: 35.1661
+  type: 'test'
+  ...
+# Subtest: broad MCP filesystem permission blocks generation
+ok 5 - broad MCP filesystem permission blocks generation
+  ---
+  duration_ms: 165.794
+  type: 'test'
+  ...
+# Subtest: doc consistency check passes on product docs
+ok 6 - doc consistency check passes on product docs
+  ---
+  duration_ms: 88.7737
+  type: 'test'
+  ...
+# Subtest: doc consistency check rejects forbidden GUI apply claim
+ok 7 - doc consistency check rejects forbidden GUI apply claim
+  ---
+  duration_ms: 102.7618
+  type: 'test'
+  ...
+# Subtest: test\\helpers\\fixtures.js
+ok 3 - test\\helpers\\fixtures.js
+  ---
+  duration_ms: 101.6075
+  type: 'test'
+  ...
+# Subtest: metis help shows Metis branding and tui command
+ok 9 - metis help shows Metis branding and tui command
+  ---
+  duration_ms: 140.1224
+  type: 'test'
+  ...
+# Subtest: pca help shows deprecation note
+ok 10 - pca help shows deprecation note
+  ---
+  duration_ms: 118.7667
+  type: 'test'
+  ...
+# Subtest: metis scan works on mixed fixture
+ok 11 - metis scan works on mixed fixture
+  ---
+  duration_ms: 149.0139
+  type: 'test'
+  ...
+# Subtest: pca alias scan still works
+ok 12 - pca alias scan still works
+  ---
+  duration_ms: 152.2641
+  type: 'test'
+  ...
+# Subtest: apply writes metis artifacts and rollback restores prior state
+ok 13 - apply writes metis artifacts and rollback restores prior state
+  ---
+  duration_ms: 351.2738
+  type: 'test'
+  ...
+# Subtest: init dry-run shows metis evidence path
+ok 14 - init dry-run shows metis evidence path
+  ---
+  duration_ms: 142.5033
+  type: 'test'
+  ...
+# Subtest: pca alias init apply still works during transition
+ok 15 - pca alias init apply still works during transition
+  ---
+  duration_ms: 234.6529
+  type: 'test'
+  ...
+# Subtest: evolve reads legacy .pca evidence index when .metis is absent
+ok 16 - evolve reads legacy .pca evidence index when .metis is absent
+  ---
+  duration_ms: 181.264
+  type: 'test'
+  ...
+# Subtest: legacy pca rollback record restores files
+ok 17 - legacy pca rollback record restores files
+  ---
+  duration_ms: 44.0655
+  type: 'test'
+  ...
+# Subtest: PCA markers migrate to single METIS section on dry-run
+ok 18 - PCA markers migrate to single METIS section on dry-run
+  ---
+  duration_ms: 187.426
+  type: 'test'
+  ...
+# Subtest: marker constants are distinct
+ok 19 - marker constants are distinct
+  ---
+  duration_ms: 0.2512
+  type: 'test'
+  ...
+# Subtest: doctor reports diagnostics without writes
+ok 20 - doctor reports diagnostics without writes
+  ---
+  duration_ms: 210.5174
+  type: 'test'
+  ...
+# Subtest: doctor json mode is stable
+ok 21 - doctor json mode is stable
+  ---
+  duration_ms: 147.6098
+  type: 'test'
+  ...
+# Subtest: doctor on empty root recommends scan
+ok 22 - doctor on empty root recommends scan
+  ---
+  duration_ms: 158.4389
+  type: 'test'
+  ...
+# Subtest: help lists doctor command
+ok 23 - help lists doctor command
+  ---
+  duration_ms: 115.2535
+  type: 'test'
+  ...
+# Subtest: gui without --preview exits 2
+ok 24 - gui without --preview exits 2
+  ---
+  duration_ms: 149.3074
+  type: 'test'
+  ...
+# Subtest: gui preview generates read-only HTML sections
+ok 25 - gui preview generates read-only HTML sections
+  ---
+  duration_ms: 159.7811
+  type: 'test'
+  ...
+# Subtest: gui implementation has no network imports
+ok 26 - gui implementation has no network imports
+  ---
+  duration_ms: 0.8085
+  type: 'test'
+  ...
+# Subtest: gui preview html has responsive layout and no mutation forms
+ok 27 - gui preview html has responsive layout and no mutation forms
+  ---
+  duration_ms: 154.2171
+  type: 'test'
+  ...
+# Subtest: sensitive gui preview redacts canaries and shows audit issues
+ok 28 - sensitive gui preview redacts canaries and shows audit issues
+  ---
+  duration_ms: 166.5966
+  type: 'test'
+  ...
+# Subtest: evolve --dry-run does not write proposals
+ok 29 - evolve --dry-run does not write proposals
+  ---
+  duration_ms: 205.5053
+  type: 'test'
+  ...
+# Subtest: CLI proposal lifecycle on mixed fixture
+ok 30 - CLI proposal lifecycle on mixed fixture
+  ---
+  duration_ms: 803.1603
+  type: 'test'
+  ...
+# Subtest: CLI proposal blocks missing id and sensitive save
+ok 31 - CLI proposal blocks missing id and sensitive save
+  ---
+  duration_ms: 230.0714
+  type: 'test'
+  ...
+# Subtest: CLI proposal dismiss requires --yes
+ok 32 - CLI proposal dismiss requires --yes
+  ---
+  duration_ms: 464.9299
+  type: 'test'
+  ...
+# Subtest: CLI proposal accept blocks baseline drift and re-apply
+ok 33 - CLI proposal accept blocks baseline drift and re-apply
+  ---
+  duration_ms: 671.7049
+  type: 'test'
+  ...
+# Subtest: CLI proposal accept apply requires prior dry-run
+ok 34 - CLI proposal accept apply requires prior dry-run
+  ---
+  duration_ms: 284.5937
+  type: 'test'
+  ...
+# Subtest: proposal record persists with lock and lists summaries
+ok 35 - proposal record persists with lock and lists summaries
+  ---
+  duration_ms: 97.9544
+  type: 'test'
+  ...
+# Subtest: proposal store rejects non-whitelisted paths and oversized payloads
+ok 36 - proposal store rejects non-whitelisted paths and oversized payloads
+  ---
+  duration_ms: 47.5147
+  type: 'test'
+  ...
+# Subtest: artifact lock rejects concurrent holders
+ok 37 - artifact lock rejects concurrent holders
+  ---
+  duration_ms: 23.6978
+  type: 'test'
+  ...
+# Subtest: artifact lock recovers stale lock files
+ok 38 - artifact lock recovers stale lock files
+  ---
+  duration_ms: 23.9987
+  type: 'test'
+  ...
+# Subtest: listProposals reports unreadable records as warnings
+ok 39 - listProposals reports unreadable records as warnings
+  ---
+  duration_ms: 19.2915
+  type: 'test'
+  ...
+# Subtest: resolveProposalId latest returns newest proposal by createdAt
+ok 40 - resolveProposalId latest returns newest proposal by createdAt
+  ---
+  duration_ms: 46.7943
+  type: 'test'
+  ...
+# Subtest: readProposal rejects oversized files
+ok 41 - readProposal rejects oversized files
+  ---
+  duration_ms: 20.5412
+  type: 'test'
+  ...
+# Subtest: saved proposals stay redacted without sensitive canaries
+ok 42 - saved proposals stay redacted without sensitive canaries
+  ---
+  duration_ms: 19.7476
+  type: 'test'
+  ...
+# Subtest: malformed proposal record fails validation on read
+ok 43 - malformed proposal record fails validation on read
+  ---
+  duration_ms: 19.4594
+  type: 'test'
+  ...
+# Subtest: proposal status updates stay inside artifact lock
+ok 44 - proposal status updates stay inside artifact lock
+  ---
+  duration_ms: 48.4595
+  type: 'test'
+  ...
+# Subtest: TUI state machine blocks apply before dry-run and audit
+ok 45 - TUI state machine blocks apply before dry-run and audit
+  ---
+  duration_ms: 32.8469
+  type: 'test'
+  ...
+# Subtest: TUI state machine requires exact APPLY METIS confirmation
+ok 46 - TUI state machine requires exact APPLY METIS confirmation
+  ---
+  duration_ms: 15.2691
+  type: 'test'
+  ...
+# Subtest: scripted TUI dry-run exits 0 without writes
+ok 47 - scripted TUI dry-run exits 0 without writes
+  ---
+  duration_ms: 190.9931
+  type: 'test'
+  ...
+# Subtest: scripted TUI cancel apply writes nothing
+ok 48 - scripted TUI cancel apply writes nothing
+  ---
+  duration_ms: 186.2582
+  type: 'test'
+  ...
+# Subtest: scripted TUI happy path applies metis artifacts
+ok 49 - scripted TUI happy path applies metis artifacts
+  ---
+  duration_ms: 218.9518
+  type: 'test'
+  ...
+# Subtest: TUI non-TTY without script exits 2
+ok 50 - TUI non-TTY without script exits 2
+  ---
+  duration_ms: 112.0781
+  type: 'test'
+  ...
+# Subtest: sensitive fixture view model is redacted
+ok 51 - sensitive fixture view model is redacted
+  ---
+  duration_ms: 5.1575
+  type: 'test'
+  ...
+# Subtest: GUI view model has no write actions
+ok 52 - GUI view model has no write actions
+  ---
+  duration_ms: 9.5137
+  type: 'test'
+  ...
+# Subtest: sensitive scripted TUI blocks with audit failure
+ok 53 - sensitive scripted TUI blocks with audit failure
+  ---
+  duration_ms: 131.7325
+  type: 'test'
+  ...
+# Subtest: Workbench renderer switches main panel by state and shows wide audit detail
+ok 54 - Workbench renderer switches main panel by state and shows wide audit detail
+  ---
+  duration_ms: 10.0083
+  type: 'test'
+  ...
+# Subtest: Workbench renderer uses Oracle Green ANSI theme when color is enabled
+ok 55 - Workbench renderer uses Oracle Green ANSI theme when color is enabled
+  ---
+  duration_ms: 10.3847
+  type: 'test'
+  ...
+# Subtest: Guided shell suggestions, completion, and history are state aware
+ok 56 - Guided shell suggestions, completion, and history are state aware
+  ---
+  duration_ms: 9.9779
+  type: 'test'
+  ...
+# Subtest: TUI v3 welcome panel appears on first scripted frame
+ok 57 - TUI v3 welcome panel appears on first scripted frame
+  ---
+  duration_ms: 146.3908
+  type: 'test'
+  ...
+# Subtest: TUI welcome menu select-menu navigates via scripted input
+ok 58 - TUI welcome menu select-menu navigates via scripted input
+  ---
+  duration_ms: 149.5537
+  type: 'test'
+  ...
+# Subtest: TUI welcome menu renders audit-failure options
+ok 59 - TUI welcome menu renders audit-failure options
+  ---
+  duration_ms: 4.2072
+  type: 'test'
+  ...
+# Subtest: TUI v3 scripted tab-complete and invalid command recovery
+ok 60 - TUI v3 scripted tab-complete and invalid command recovery
+  ---
+  duration_ms: 294.2498
+  type: 'test'
+  ...
+# Subtest: TUI v3 renderer adapts to 80, 100, and 140 column widths
+ok 61 - TUI v3 renderer adapts to 80, 100, and 140 column widths
+  ---
+  duration_ms: 7.2596
+  type: 'test'
+  ...
+# Subtest: TUI proposal review scripted workflow saves and inspects proposals
+ok 62 - TUI proposal review scripted workflow saves and inspects proposals
+  ---
+  duration_ms: 185.9118
+  type: 'test'
+  ...
+# Subtest: TUI save-proposal requires explicit confirmation
+ok 63 - TUI save-proposal requires explicit confirmation
+  ---
+  duration_ms: 151.1901
+  type: 'test'
+  ...
+# Subtest: TUI proposal dismiss requires explicit confirmation
+ok 64 - TUI proposal dismiss requires explicit confirmation
+  ---
+  duration_ms: 160.5598
+  type: 'test'
+  ...
+# Subtest: Raw key parser handles multi-key chunks for guided shell input
+ok 65 - Raw key parser handles multi-key chunks for guided shell input
+  ---
+  duration_ms: 0.4622
+  type: 'test'
+  ...
+# Subtest: scanWorkflow returns evidence without writes
+ok 66 - scanWorkflow returns evidence without writes
+  ---
+  duration_ms: 37.866
+  type: 'test'
+  ...
+# Subtest: scan reports Claude, Codex, and project evidence without writes
+ok 67 - scan reports Claude, Codex, and project evidence without writes
+  ---
+  duration_ms: 195.8213
+  type: 'test'
+  ...
+# Subtest: plan prints evidence-backed candidates with review metadata
+ok 68 - plan prints evidence-backed candidates with review metadata
+  ---
+  duration_ms: 149.213
+  type: 'test'
+  ...
+# Subtest: init dry-run prints real diffs and writes no target files
+ok 69 - init dry-run prints real diffs and writes no target files
+  ---
+  duration_ms: 173.8356
+  type: 'test'
+  ...
+# Subtest: apply writes whitelist files and rollback restores prior state
+ok 70 - apply writes whitelist files and rollback restores prior state
+  ---
+  duration_ms: 330.78
+  type: 'test'
+  ...
+# Subtest: evolve dry-run proposes changes without writing
+ok 71 - evolve dry-run proposes changes without writing
+  ---
+  duration_ms: 160.7241
+  type: 'test'
+  ...
+# Subtest: include-history reads bounded redacted snippets only when opted in
+ok 72 - include-history reads bounded redacted snippets only when opted in
+  ---
+  duration_ms: 240.2223
+  type: 'test'
+  ...
+# Subtest: sensitive canaries are redacted and prompt injection blocks generation
+ok 73 - sensitive canaries are redacted and prompt injection blocks generation
+  ---
+  duration_ms: 237.3014
+  type: 'test'
+  ...
+# Subtest: invalid arguments and fixture roots fail before scanning
+ok 74 - invalid arguments and fixture roots fail before scanning
+  ---
+  duration_ms: 497.7764
+  type: 'test'
+  ...
+# Subtest: invalid fixture errors mask private home path segments
+ok 75 - invalid fixture errors mask private home path segments
+  ---
+  duration_ms: 118.7434
+  type: 'test'
+  ...
+# Subtest: symlink scan root is rejected when platform permits symlink creation
+ok 76 - symlink scan root is rejected when platform permits symlink creation
+  ---
+  duration_ms: 4.215
+  type: 'test'
+  ...
+# Subtest: source files do not introduce remote-call modules or calls
+ok 77 - source files do not introduce remote-call modules or calls
+  ---
+  duration_ms: 3.7857
+  type: 'test'
+  ...
+# Subtest: apply refuses junction parent that escapes scan root
+ok 78 - apply refuses junction parent that escapes scan root
+  ---
+  duration_ms: 208.6749
+  type: 'test'
+  ...
+# Subtest: rollback malformed record validates before writing anything
+ok 79 - rollback malformed record validates before writing anything
+  ---
+  duration_ms: 393.6913
+  type: 'test'
+  ...
+# Subtest: project script github token is redacted from scan and dry-run evidence
+ok 80 - project script github token is redacted from scan and dry-run evidence
+  ---
+  duration_ms: 267.2021
+  type: 'test'
+  ...
+# Subtest: history file names are redacted when include-history is enabled
+ok 81 - history file names are redacted when include-history is enabled
+  ---
+  duration_ms: 138.3745
+  type: 'test'
+  ...
+# Subtest: dangerous remote pipe script blocks generation
+ok 82 - dangerous remote pipe script blocks generation
+  ---
+  duration_ms: 124.4871
+  type: 'test'
+  ...
+1..82
+# tests 82
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2844.163
+EXIT:0

@@ -1,0 +1,11 @@
+{
+  "name": "mixed-agent-project",
+  "scripts": {
+    "test": "npm test",
+    "build": "node --check index.js",
+    "lint": "node --check index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

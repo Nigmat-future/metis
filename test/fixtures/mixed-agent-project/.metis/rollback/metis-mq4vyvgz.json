@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "metis-mq4vyvgz",
+  "paths": [
+    {
+      "path": "CLAUDE.md",
+      "existed": true,
+      "content": "# Mixed Claude Fixture\n\nRun npm test before final answers.\n"
+    },
+    {
+      "path": "AGENTS.md",
+      "existed": true,
+      "content": "Always respond in Chinese-simplified.\nKeep local evidence private and redacted.\n"
+    },
+    {
+      "path": ".cursor/rules/personal-agent.mdc",
+      "existed": false,
+      "content": ""
+    },
+    {
+      "path": ".metis/evidence/index.json",
+      "existed": false,
+      "content": ""
+    }
+  ],
+  "backup": {
+    "paths": [
+      {
+        "content": "# Mixed Claude Fixture\n\nRun npm test before final answers.\n",
+        "existed": true,
+        "path": "CLAUDE.md"
+      },
+      {
+        "content": "Always respond in Chinese-simplified.\nKeep local evidence private and redacted.\n",
+        "existed": true,
+        "path": "AGENTS.md"
+      },
+      {
+        "content": "",
+        "existed": false,
+        "path": ".cursor/rules/personal-agent.mdc"
+      },
+      {
+        "content": "",
+        "existed": false,
+        "path": ".metis/evidence/index.json"
+      }
+    ]
+  },
+  "cleanup": {
+    "rollbackPath": ".metis/rollback/metis-mq4vyvgz.json"
+  }
+}

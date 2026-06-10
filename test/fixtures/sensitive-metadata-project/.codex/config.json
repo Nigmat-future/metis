@@ -1,0 +1,4 @@
+{
+  "sk-pca-fake-secret": "metadata-key-only",
+  "internal.customer.example": "metadata-value-only"
+}

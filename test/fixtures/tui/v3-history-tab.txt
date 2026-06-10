@@ -1,0 +1,4 @@
+tab-complete pre
+plan
+preview-diff
+quit

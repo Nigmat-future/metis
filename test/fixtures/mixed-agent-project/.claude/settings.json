@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": ["Bash(npm test)"]
+  },
+  "mcpServers": {
+    "fixture": {
+      "command": "fixture-mcp"
+    }
+  }
+}

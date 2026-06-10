@@ -1,0 +1,5 @@
+
+> metis@0.3.0 qa:product
+> node scripts/product-qa.js
+
+product QA passed

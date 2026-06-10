@@ -1,0 +1,4 @@
+Proposal saved: metis-proposal-mq547a46
+Path: .metis/proposals/metis-proposal-mq547a46.json
+Changes: 2
+Writes: proposal metadata only

@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": ["Bash(npm test)"]
+  },
+  "mcpServers": {
+    "local-docs": {
+      "command": "node",
+      "args": ["server.js"],
+      "env": {
+        "ANTHROPIC_API_KEY": "sk-ant-fake-secret-for-redaction-test"
+      }
+    }
+  }
+}

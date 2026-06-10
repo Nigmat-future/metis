@@ -1,0 +1,6 @@
+plan
+save-proposal --yes
+proposal-list
+proposal-inspect latest
+proposal-accept-dry-run latest
+quit
