@@ -2,122 +2,164 @@
 
 # Metis
 
-**Turn repeated AI coding corrections into personal, local, reviewable, reversible rules.**
+### The local rule engine for coding agents that need taste, memory, and restraint.
 
-Metis is a small local tool for teams and solo developers who keep teaching AI
-coding agents the same lessons. It gathers evidence already in your project,
-turns repeated AI coding corrections into short scaffold rules, previews every
-change, and writes only after you approve.
+Metis turns **repeated AI coding corrections** into **personal**, **local**,
+**reviewable**, and **reversible** project rules. It reads the guidance and
+signals already living in your repo, proposes compact agent scaffolds, previews
+the exact diff, and writes only after you approve.
 
-[Quick Start](#quick-start) · [Workflow](#workflow) · [Commands](#commands) · [Safety](#safety-boundary)
+[Quick Start](#quick-start) | [How It Works](#how-it-works) | [Safety Model](#safety-model) | [Docs](#docs)
+
+![Node >=18](https://img.shields.io/badge/node-%3E%3D18-1f6f50?style=flat-square)
+![MIT](https://img.shields.io/badge/license-MIT-111111?style=flat-square)
+![Local first](https://img.shields.io/badge/local--first-yes-2f5f8f?style=flat-square)
+![Telemetry](https://img.shields.io/badge/telemetry-none-8b5cf6?style=flat-square)
 
 </div>
 
 ---
 
-## Before / After
+## Why Metis Exists
+
+Every serious codebase teaches its agents the same lessons over and over:
 
 | Before | After |
 | --- | --- |
-| "Run the real test command before answering." | Metis finds the repeated pattern and proposes a concise rule. |
-| "Keep replies in Simplified Chinese for this repo." | Metis links the rule to local evidence and shows confidence/risk. |
-| "Do not turn every preference into a giant prompt." | Metis keeps the scaffold short, reviewable, and reversible. |
+| "Run the real test command before answering." | Metis turns the correction into a short scaffold rule. |
+| "Keep responses in the project's language." | Metis ties the preference to local evidence. |
+| "Stop editing generated files casually." | Metis marks risk, target paths, and review state. |
+| "Do not bloat the prompt with every passing thought." | Metis keeps the output compact and reversible. |
 
-Metis is not a hosted memory product and not a second agent. It is a quiet,
-local review room for the rules that make coding assistants behave more like
-they belong to your project.
+Most tools either forget these corrections, bury them in chat history, or ask
+you to hand-maintain giant instruction files. Metis sits in the middle: a
+local review layer for agent behavior.
 
-## What Metis Does
+It does not replace your coding agent. It makes the rules around your agent
+sharper.
 
-| Capability | Result |
-| --- | --- |
-| Read-only scan | Collects project guidance, package scripts, docs, and bounded agent evidence. |
-| Candidate planning | Proposes short rules with evidence ids, confidence, targets, and risk. |
-| Diff preview | Shows exactly what would change before any file is written. |
-| Terminal workflow | Provides a guided TUI for scan, plan, preview, apply, rollback, and proposals. |
-| Static dashboard | Exports a read-only HTML review page for evidence, candidates, audit, and diffs. |
-| Rollback first | Writes rollback metadata before mutating whitelisted scaffold files. |
+## How It Works
 
-## Workflow
+```text
+              local evidence
+                   |
+                   v
+        +----------------------+
+        |        Metis         |
+        | scan -> plan -> diff |
+        +----------------------+
+                   |
+        review, approve, rollback
+                   |
+                   v
+          compact agent scaffold
+```
+
+Metis is built for developers who want their agents to feel calibrated without
+giving up control. It is small on purpose: read the repo, propose rules, show
+the diff, protect secrets, and leave a rollback trail.
+
+## The Loop
 
 ```mermaid
 flowchart LR
   A["doctor"] --> B["scan"]
   B --> C["plan"]
-  C --> D["preview diff"]
+  C --> D["dry-run diff"]
   D --> E{"approve?"}
-  E -->|no| C
-  E -->|yes| F["apply"]
-  F --> G["rollback available"]
+  E -->|revise| C
+  E -->|apply| F["write scaffold"]
+  F --> G["rollback record"]
 ```
 
-First run is read-only by default. Apply only after you have reviewed the dry-run
-output from the CLI or TUI.
+The default path is read-only. Mutation is explicit.
+
+## What You Get
+
+| Layer | What Metis does | Why it matters |
+| --- | --- | --- |
+| Evidence | Finds project guidance, package scripts, docs, and bounded agent signals. | Rules come from the repo, not vibes. |
+| Planning | Produces candidates with evidence ids, confidence, target files, and risk. | You can judge the rule before it lands. |
+| Diffing | Shows generated scaffold changes before write. | No silent prompt drift. |
+| Terminal UI | Guides scan, plan, preview, apply, rollback, and proposals. | The main workflow stays fast in the terminal. |
+| Dashboard | Exports a static read-only HTML review surface. | Share or inspect state without giving it mutation powers. |
+| Rollback | Records restore data before applying changes. | Every write has a way back. |
 
 ## Quick Start
 
 ```bash
 npm install
 npm run check
+```
 
+Run the read-only path against the included fixture:
+
+```bash
 node bin/metis.js doctor --fixture test/fixtures/mixed-agent-project
 node bin/metis.js scan --fixture test/fixtures/mixed-agent-project
 node bin/metis.js plan --fixture test/fixtures/mixed-agent-project
 node bin/metis.js init --dry-run --fixture test/fixtures/mixed-agent-project
 ```
 
-Review the dry-run output, then apply to a copied fixture or real project root:
+Apply only after reviewing the dry-run output:
 
 ```bash
 node bin/metis.js init --apply --yes --fixture <project-root>
 node bin/metis.js rollback <rollback-id> --fixture <project-root>
 ```
 
-## Commands
+## Command Surface
 
-| Command | Purpose | Writes |
+| Command | Role | Writes |
 | --- | --- | --- |
-| `metis doctor` | Check environment and artifact health | No |
-| `metis scan` | Gather local evidence | No |
-| `metis plan` | Print candidate rules | No |
-| `metis init --dry-run` | Preview scaffold diffs | No |
-| `metis init --apply --yes` | Apply approved scaffold changes | Yes |
-| `metis rollback <id>` | Restore files from rollback metadata | Yes |
-| `metis evolve --dry-run` | Propose small updates to existing candidates | No |
-| `metis tui` | Run the terminal-first review workflow | Only after confirmation |
-| `metis gui --preview` | Export a static read-only dashboard | Writes the requested HTML file |
+| `metis doctor` | Check environment and artifact health. | No |
+| `metis scan` | Gather local evidence. | No |
+| `metis plan` | Print candidate rules. | No |
+| `metis init --dry-run` | Preview scaffold diffs. | No |
+| `metis init --apply --yes` | Apply approved scaffold changes. | Yes |
+| `metis rollback <id>` | Restore files from rollback metadata. | Yes |
+| `metis evolve --dry-run` | Propose small updates to existing candidates. | No |
+| `metis tui` | Run the terminal-first review workflow. | Only after confirmation |
+| `metis gui --preview` | Export a static read-only dashboard. | Requested HTML only |
 
-Runtime is zero-dependency CommonJS on Node.js 18 or newer.
+Metis runs as zero-dependency CommonJS on Node.js 18 or newer.
 
-## TUI And GUI
-
-Run the guided terminal workflow:
+## Terminal First
 
 ```bash
-node bin/metis.js tui --fixture test/fixtures/mixed-agent-project --script test/fixtures/tui/dry-run.txt
+node bin/metis.js tui \
+  --fixture test/fixtures/mixed-agent-project \
+  --script test/fixtures/tui/dry-run.txt
 ```
 
-Export a static review dashboard:
+The TUI is the primary review room: scan evidence, inspect candidates, preview
+diffs, save proposals, apply with an exact confirmation phrase, and rollback
+when needed.
+
+## Static Review Dashboard
 
 ```bash
-node bin/metis.js gui --preview --fixture test/fixtures/mixed-agent-project --out /tmp/metis-preview.html
+node bin/metis.js gui --preview \
+  --fixture test/fixtures/mixed-agent-project \
+  --out /tmp/metis-preview.html
 ```
 
-The dashboard supports search, filters, detail views, and redacted JSON export.
-It is read-only and does not include mutation controls.
+The dashboard is intentionally read-only. It gives you search, filters, detail
+views, audit state, diff preview, rollback ledger, and redacted JSON export
+without adding mutation controls.
 
-## Generated Files
+## Generated Targets
 
-`init --dry-run` can propose changes for:
+`init --dry-run` can propose scaffold changes for:
 
-| Path | Role |
+| Path | Purpose |
 | --- | --- |
-| `AGENTS.md` | Codex project guidance |
-| `CLAUDE.md` | Claude Code project guidance |
-| `.cursor/rules/personal-agent.mdc` | Cursor project rules |
-| `.metis/evidence/index.json` | Redacted local evidence index |
+| `AGENTS.md` | Codex project guidance. |
+| `CLAUDE.md` | Claude Code project guidance. |
+| `.cursor/rules/personal-agent.mdc` | Cursor project rules. |
+| `.metis/evidence/index.json` | Redacted local evidence index. |
 
-Generated sections are wrapped with stable markers:
+Generated sections are bounded by stable markers:
 
 ```text
 <!-- METIS:BEGIN -->
@@ -126,27 +168,42 @@ Generated sections are wrapped with stable markers:
 
 Manual content outside those markers is preserved.
 
-## Safety Boundary
+## Safety Model
+
+Metis treats agent instructions as production infrastructure.
 
 | Boundary | Guarantee |
 | --- | --- |
 | Local first | No accounts, API keys, remote calls, or telemetry in core workflows. |
 | Review first | Scan, plan, and dry-run do not mutate target scaffold files. |
-| Explicit apply | TUI apply requires typing `APPLY METIS`; CLI apply requires an apply flag. |
-| Whitelisted writes | Apply writes only known scaffold/artifact paths. |
-| Secret handling | Secret-like values, private paths, and risky evidence are redacted or blocked. |
-| Reversible changes | Rollback metadata is created before scaffold writes. |
+| Explicit apply | CLI apply requires apply flags; TUI apply requires typing `APPLY METIS`. |
+| Whitelisted writes | Apply writes only known scaffold and artifact paths. |
+| Secret handling | Secret-like values, private paths, prompt-injection markers, and risky evidence are redacted or blocked. |
+| Rollback before write | Restore metadata is created before scaffold mutation. |
 
-## Documentation
+## Philosophy
 
-- [Architecture](docs/ARCHITECTURE.md)
-- [Product-grade baseline](docs/PRODUCT-GRADE.md)
-- [Proposal lifecycle](docs/PROPOSALS.md)
-- [Migration notes](docs/MIGRATION.md)
-- [Troubleshooting](docs/TROUBLESHOOTING.md)
-- [Release process](docs/RELEASE.md)
-- [Security policy](SECURITY.md)
-- [Contributing](CONTRIBUTING.md)
+Metis is for instruction hygiene.
+
+Not a memory cloud. Not a model gateway. Not an agent runtime. Not a pile of
+prompts pretending to be a system.
+
+It is a compiler for the instruction layer: find the repeated lesson, compress
+it into a rule, show the evidence, and let the human decide whether it belongs
+in the scaffold.
+
+## Docs
+
+| Document | Start here when you need |
+| --- | --- |
+| [Architecture](docs/ARCHITECTURE.md) | Internal module boundaries and data flow. |
+| [Product-grade baseline](docs/PRODUCT-GRADE.md) | Release quality expectations and guardrails. |
+| [Proposal lifecycle](docs/PROPOSALS.md) | Saved proposal states and review flow. |
+| [Migration notes](docs/MIGRATION.md) | Compatibility and transition details. |
+| [Troubleshooting](docs/TROUBLESHOOTING.md) | Common failure modes. |
+| [Release process](docs/RELEASE.md) | Maintainer release checklist. |
+| [Security policy](SECURITY.md) | Reporting and sensitive-data rules. |
+| [Contributing](CONTRIBUTING.md) | How to help without weakening the boundary. |
 
 ## Development
 
