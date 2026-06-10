@@ -4,7 +4,7 @@ const path = require('node:path');
 const { test } = require('node:test');
 const { copyFixtureToTemp } = require('./helpers/fixtures');
 const { assertProposalWritePath, acquireLock, withArtifactLock } = require('../lib/core/artifact-store');
-const { MAX_PROPOSAL_BYTES } = require('../lib/core/artifacts');
+const { MAX_PROPOSAL_BYTES, makeProposalId, makeRollbackId } = require('../lib/core/artifacts');
 const {
   buildProposalRecord,
   listProposals,
@@ -108,6 +108,17 @@ test('resolveProposalId latest returns newest proposal by createdAt', () => {
   const second = saveProposal(root, buildProposalRecord(pipeline, changes));
   assert.strictEqual(resolveProposalId(root, 'latest'), second.id);
   assert.notStrictEqual(first.id, second.id);
+});
+
+test('artifact ids stay unique within the same millisecond', () => {
+  const originalNow = Date.now;
+  Date.now = () => 1700000000000;
+  try {
+    assert.notStrictEqual(makeProposalId(), makeProposalId());
+    assert.notStrictEqual(makeRollbackId(), makeRollbackId());
+  } finally {
+    Date.now = originalNow;
+  }
 });
 
 test('readProposal rejects oversized files', () => {
