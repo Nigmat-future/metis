@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Learn from repeated corrections: `metis note "<correction>"` captures one redacted correction by hand, and `metis learn --source <claude|git|all>` previews (`--dry-run`) or captures (`--yes`) corrections from local Claude transcripts and git revert history
+- Correction classifier (`lib/core/correction-signals.js`): detects negation, re-instruction, and undo signals in English and Simplified Chinese, with normalized fingerprints for clustering
+- Frequency-weighted candidates: a correction repeated across sessions scores higher and climbs from document-only toward a generate decision
+- Append-only redacted corrections log at `.metis/corrections/log.jsonl`
+
+### Security
+
+- Transcript reading is strictly opt-in (only on explicit `metis learn`); every captured correction is redacted at write time
+
 ## 0.3.0 — Product-grade release
 
 ### Added

@@ -33,6 +33,8 @@ bin/metis.js (bin/pca.js alias)
 - `init --apply --yes` reuses the same generation path, runs safety audit, creates rollback metadata, then writes whitelisted files.
 - `rollback <id>` validates and restores a rollback record (`.metis` or legacy `.pca`).
 - `evolve --dry-run` compares current evidence with evidence index and proposes additions/removals only.
+- `note "<correction>"` appends one redacted, classified correction to `.metis/corrections/log.jsonl` and writes nothing else.
+- `learn --source <claude|git|all>` discovers corrections from local transcripts and git revert history; `--dry-run` previews them, `--yes` appends de-duplicated records to the corrections log.
 - `gui --preview` snapshots workflow data once and writes static HTML; no server, no writes to project files.
 - `agents` lists supported agent CLIs and detects which are installed, writing nothing.
 - `run <agent> "<prompt>"` previews the exact CLI command (`--dry-run`) or executes it (`--yes`); `--interactive` runs a multi-turn session and `--attach` hands the terminal to the agent's own interface.
@@ -43,6 +45,7 @@ Canonical paths:
 
 - `.metis/evidence/index.json`
 - `.metis/rollback/metis-<timestamp>.json`
+- `.metis/corrections/log.jsonl`
 
 Legacy compatibility:
 
@@ -53,6 +56,15 @@ Legacy compatibility:
 ## Adapters
 
 Adapters receive a context with root, options, redactor, and evidence builder. They never print, execute hooks, traverse symlinks, or read outside the scan root.
+
+## Corrections
+
+Metis learns from repeated corrections as a first-class evidence source, distinct from the static repo scan:
+
+- `lib/core/correction-signals.js` is a pure, dependency-free classifier: it decides whether a string is a correction (negation, re-instruction, or undo — English and Simplified Chinese) and produces a normalized fingerprint for clustering.
+- `lib/core/corrections-store.js` is the append-only JSON Lines store at `.metis/corrections/log.jsonl`. Every record is redacted at write time and reads tolerate corrupt lines.
+- `lib/adapters/transcript.js` reads Claude Code transcripts under `<home>/.claude/projects/<encoded-root>/*.jsonl` only on explicit `learn`. `lib/adapters/git-history.js` reads commit subjects to find revert/undo patterns with an injectable `git` runner.
+- `lib/extractor/corrections.js` clusters records by fingerprint (Jaccard token overlap) and counts frequency. `lib/adapters/corrections.js` emits one evidence record per cluster, and `lib/extractor/behavior.js` turns correction evidence into frequency-bearing behaviors that the planner scores higher the more a correction recurs.
 
 ## Driver
 
