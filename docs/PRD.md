@@ -2,7 +2,7 @@
 
 ## Summary
 
-Metis (`metis`) turns local AI coding-agent evidence into a reviewable, reversible personal agent scaffold. It supports Claude Code, Codex, Cursor rule output, and project command evidence without requiring accounts, hosted processing, runtime dependencies, or telemetry.
+Metis (`metis`) turns local AI coding-agent evidence into a reviewable, reversible personal agent scaffold. It supports Claude Code, Codex, Cursor rule output, and project command evidence without requiring accounts, hosted processing, runtime dependencies, or telemetry. Beyond producing rules, Metis can also drive the agent CLIs (Claude Code, Codex, OpenCode, Cursor) as local subprocesses on explicit confirmation.
 
 Metis is deliberately personal and small: a calm local review room for repeated AI coding corrections, not a hosted memory product, model gateway, or workflow takeover. The product should help developers keep rules short, private, reviewable, and reversible across tools.
 
@@ -25,6 +25,19 @@ The usable MVP includes:
 - read-only GUI static HTML preview (no localhost server)
 - `pca` compatibility alias for one release
 - fixture-driven tests for happy paths, invalid args, redaction, no writes, apply/rollback, symlink root rejection, UI canary redaction, and remote-call static checks
+
+## Agent Driver
+
+Metis can drive installed agent CLIs as local subprocesses, mirroring a per-agent skill spec (one normalized launch/continue/attach description per agent):
+
+- supported agents: Claude Code, Codex, OpenCode, and Cursor
+- `agents` lists which CLIs are installed and which config files each uses in the project
+- `run <agent> "<prompt>" --dry-run` previews the exact command and writes nothing
+- `run <agent> "<prompt>" --yes` executes one shot and captures output
+- `run <agent> --interactive --yes` drives a multi-turn session via each agent's headless resume/continue flags, with no pseudo-terminal required
+- `run <agent> --attach --yes` hands the terminal to the agent's own interface
+- execution is opt-in: every run requires `--dry-run` or `--yes`; an agent's skip-confirmation flag is passed only with `--yolo`
+- Metis performs no network or LLM calls itself; the driver only launches local CLIs the developer already installed, resolved against PATH or a `METIS_DRIVER_BIN_<AGENT>` override
 
 ## Non-Goals
 

@@ -20,6 +20,8 @@ bin/metis.js (bin/pca.js alias)
   -> lib/ui/view-model.js
   -> lib/tui/* (terminal workflow)
   -> lib/gui/* (static HTML preview)
+  -> lib/workflows/driver.js
+  -> lib/driver/* (launch local agent CLIs)
 ```
 
 ## CLI Contract
@@ -32,6 +34,8 @@ bin/metis.js (bin/pca.js alias)
 - `rollback <id>` validates and restores a rollback record (`.metis` or legacy `.pca`).
 - `evolve --dry-run` compares current evidence with evidence index and proposes additions/removals only.
 - `gui --preview` snapshots workflow data once and writes static HTML; no server, no writes to project files.
+- `agents` lists supported agent CLIs and detects which are installed, writing nothing.
+- `run <agent> "<prompt>"` previews the exact CLI command (`--dry-run`) or executes it (`--yes`); `--interactive` runs a multi-turn session and `--attach` hands the terminal to the agent's own interface.
 
 ## Artifacts
 
@@ -49,6 +53,12 @@ Legacy compatibility:
 ## Adapters
 
 Adapters receive a context with root, options, redactor, and evidence builder. They never print, execute hooks, traverse symlinks, or read outside the scan root.
+
+## Driver
+
+The driver launches the coding-agent CLIs already installed on the machine (`claude`, `codex`, `opencode`, `cursor`). Each agent has a small declarative spec in `lib/driver/agents.js` describing its one-shot, continue, and attach invocations, mirroring a per-agent skill file. Spawning is isolated in `lib/driver/spawn.js` (synchronous `spawnSync`, injectable for tests) so the rest of the driver stays deterministic.
+
+Execution is opt-in: `run` requires `--dry-run` or `--yes`, matching the apply gate. The driver performs no network I/O of its own, and resolves binaries against PATH (honouring `PATHEXT` on Windows plus a `METIS_DRIVER_BIN_<AGENT>` override). Interactive sessions reuse each agent's headless resume/continue flags instead of a pseudo-terminal, which keeps multi-turn driving cross-platform.
 
 ## Safety And Writes
 

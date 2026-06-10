@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/assets/metis-logo.svg" alt="Metis logo" width="132" />
+
 # Metis
 
 ### The local rule engine for coding agents that need taste, memory, and restraint.
@@ -121,6 +123,9 @@ node bin/metis.js rollback <rollback-id> --fixture <project-root>
 | `metis evolve --dry-run` | Propose small updates to existing candidates. | No |
 | `metis tui` | Run the terminal-first review workflow. | Only after confirmation |
 | `metis gui --preview` | Export a static read-only dashboard. | Requested HTML only |
+| `metis agents` | List supported agent CLIs and detect which are installed. | No |
+| `metis run <agent> "<prompt>" --dry-run` | Preview the exact agent CLI command. | No |
+| `metis run <agent> "<prompt>" --yes` | Drive a local agent CLI and capture output. | Runs a local CLI |
 
 Metis runs as zero-dependency CommonJS on Node.js 18 or newer.
 
@@ -147,6 +152,32 @@ node bin/metis.js gui --preview \
 The dashboard is intentionally read-only. It gives you search, filters, detail
 views, audit state, diff preview, rollback ledger, and redacted JSON export
 without adding mutation controls.
+
+## Drive Your Agent CLIs
+
+Metis can also *drive* the coding-agent CLIs you already have installed, as local
+subprocesses. The design mirrors a per-agent skill file: one normalized spec per
+agent describing how to launch it, pass a prompt, and continue a session.
+
+```bash
+# Preview the exact command first (runs nothing, writes nothing):
+node bin/metis.js run claude "summarize the open TODOs" --dry-run
+
+# Then execute it and capture the output:
+node bin/metis.js run claude "summarize the open TODOs" --yes
+
+# Multi-turn session, or hand the terminal to the agent's own interface:
+node bin/metis.js run codex --interactive --yes
+node bin/metis.js run opencode --attach --yes
+```
+
+Supported agents: `claude`, `codex`, `opencode`, `cursor`. Run `metis agents` to see
+which are installed and which config files each one uses in the current project.
+
+Execution is opt-in and explicit: every run requires `--dry-run` (preview only) or
+`--yes` (execute). Metis itself performs no network I/O; it only launches a local CLI
+you already trust, and passes an agent's skip-confirmation flag only when you add
+`--yolo`. Point Metis at a specific binary with `METIS_DRIVER_BIN_<AGENT>` when needed.
 
 ## Generated Targets
 
@@ -180,13 +211,15 @@ Metis treats agent instructions as production infrastructure.
 | Whitelisted writes | Apply writes only known scaffold and artifact paths. |
 | Secret handling | Secret-like values, private paths, prompt-injection markers, and risky evidence are redacted or blocked. |
 | Rollback before write | Restore metadata is created before scaffold mutation. |
+| Explicit drive | `metis run` launches a local agent CLI only after a `--dry-run` preview and an explicit `--yes`; Metis sends nothing over the network. |
 
 ## Philosophy
 
 Metis is for instruction hygiene.
 
-Not a memory cloud. Not a model gateway. Not an agent runtime. Not a pile of
-prompts pretending to be a system.
+Not a memory cloud. Not a model gateway. Not an agent runtime of its own — when
+asked, it drives the agent CLIs you already run. Not a pile of prompts pretending
+to be a system.
 
 It is a compiler for the instruction layer: find the repeated lesson, compress
 it into a rule, show the evidence, and let the human decide whether it belongs
