@@ -1,5 +1,0 @@
-
-> metis@0.3.0 smoke:install
-> node scripts/install-smoke.js
-
-install smoke passed

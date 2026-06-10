@@ -11,3 +11,6 @@ Thumbs.db
 .env.*
 !.env.example
 .pca/
+.omo/
+docs/superpowers/plans/
+brainstorm-*.md

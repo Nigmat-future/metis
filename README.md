@@ -1,183 +1,152 @@
-# Metis (`metis`)
+<div align="center">
 
-> Turn repeated AI coding corrections into personal, local, reviewable rules.
+# Metis
 
-Every developer slowly teaches their coding agents the same things:
+**Turn repeated AI coding corrections into personal, local, reviewable, reversible rules.**
 
-- which test command actually matters
-- which files should never be touched casually
-- how much explanation is useful before edits
-- which project rules are team policy and which are personal working style
+Metis is a small local tool for teams and solo developers who keep teaching AI
+coding agents the same lessons. It gathers evidence already in your project,
+turns repeated AI coding corrections into short scaffold rules, previews every
+change, and writes only after you approve.
 
-That knowledge usually stays scattered across chats, `AGENTS.md`, `CLAUDE.md`,
-Cursor rules, package scripts, and half-remembered corrections. Metis gathers
-the local evidence, proposes short rules, and lets you decide what becomes part
-of your personal coding scaffold.
+[Quick Start](#quick-start) · [Workflow](#workflow) · [Commands](#commands) · [Safety](#safety-boundary)
 
-Metis is intentionally small. It is not a hosted memory product, not a chat
-runtime, and not a second agent trying to take over your workflow. It is a quiet
-local review room for the rules that make your agents feel like they are yours.
+</div>
+
+---
 
 ## Before / After
 
-Before:
+| Before | After |
+| --- | --- |
+| "Run the real test command before answering." | Metis finds the repeated pattern and proposes a concise rule. |
+| "Keep replies in Simplified Chinese for this repo." | Metis links the rule to local evidence and shows confidence/risk. |
+| "Do not turn every preference into a giant prompt." | Metis keeps the scaffold short, reviewable, and reversible. |
 
-```text
-"Run npm test before you answer."
-"Please keep replies in Simplified Chinese for this project."
-"Do not turn every preference into a huge system prompt."
+Metis is not a hosted memory product and not a second agent. It is a quiet,
+local review room for the rules that make coding assistants behave more like
+they belong to your project.
+
+## What Metis Does
+
+| Capability | Result |
+| --- | --- |
+| Read-only scan | Collects project guidance, package scripts, docs, and bounded agent evidence. |
+| Candidate planning | Proposes short rules with evidence ids, confidence, targets, and risk. |
+| Diff preview | Shows exactly what would change before any file is written. |
+| Terminal workflow | Provides a guided TUI for scan, plan, preview, apply, rollback, and proposals. |
+| Static dashboard | Exports a read-only HTML review page for evidence, candidates, audit, and diffs. |
+| Rollback first | Writes rollback metadata before mutating whitelisted scaffold files. |
+
+## Workflow
+
+```mermaid
+flowchart LR
+  A["doctor"] --> B["scan"]
+  B --> C["plan"]
+  C --> D["preview diff"]
+  D --> E{"approve?"}
+  E -->|no| C
+  E -->|yes| F["apply"]
+  F --> G["rollback available"]
 ```
 
-After:
+First run is read-only by default. Apply only after you have reviewed the dry-run
+output from the CLI or TUI.
 
-```text
-Metis finds the repeated pattern, shows the evidence, checks rule quality,
-previews the diff, and writes only after you approve.
-```
-
-## Why It Exists
-
-Agent tools already read project guidance: Codex uses `AGENTS.md`, Claude Code
-uses `CLAUDE.md`, and Cursor uses project rules. Metis helps keep those files
-short, aligned, private, and reversible across tools.
-
-## First Run
-
-First run is read-only: scan and review before any write.
+## Quick Start
 
 ```bash
+npm install
+npm run check
+
 node bin/metis.js doctor --fixture test/fixtures/mixed-agent-project
 node bin/metis.js scan --fixture test/fixtures/mixed-agent-project
 node bin/metis.js plan --fixture test/fixtures/mixed-agent-project
 node bin/metis.js init --dry-run --fixture test/fixtures/mixed-agent-project
-node bin/metis.js tui --fixture test/fixtures/mixed-agent-project --script test/fixtures/tui/dry-run.txt
 ```
 
-| Step | Command | Writes? |
-| --- | --- | --- |
-| Diagnostics | `metis doctor` | No |
-| Evidence scan | `metis scan` | No |
-| Candidate review | `metis plan` | No |
-| Diff preview | `metis init --dry-run` or TUI `preview-diff` | No |
-| Apply | `metis init --apply --yes` or TUI `APPLY METIS` | Yes (rollback metadata first) |
-
-Apply only after reviewing dry-run output (CLI or TUI):
+Review the dry-run output, then apply to a copied fixture or real project root:
 
 ```bash
-TEMP_ROOT="$(mktemp -d)"
-cp -R test/fixtures/mixed-agent-project/. "$TEMP_ROOT/"
-node bin/metis.js init --apply --yes --fixture "$TEMP_ROOT"
-node bin/metis.js rollback <rollback-id> --fixture "$TEMP_ROOT"
+node bin/metis.js init --apply --yes --fixture <project-root>
+node bin/metis.js rollback <rollback-id> --fixture <project-root>
 ```
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `metis doctor` | Read-only environment and artifact diagnostics |
-| `metis tui` | Interactive terminal workflow (primary) |
-| `metis scan` | Scan Claude Code, Codex, and project evidence |
-| `metis plan` | Print candidates with evidence ids, confidence, targets, risk |
-| `metis init --dry-run` | Print unified diffs, write nothing |
-| `metis init --apply --yes` | Apply scaffold with rollback metadata |
-| `metis rollback <id>` | Restore files from rollback record |
-| `metis evolve --dry-run` | Propose small candidate changes, write nothing |
-| `metis gui --preview` | Generate read-only static HTML dashboard |
+| Command | Purpose | Writes |
+| --- | --- | --- |
+| `metis doctor` | Check environment and artifact health | No |
+| `metis scan` | Gather local evidence | No |
+| `metis plan` | Print candidate rules | No |
+| `metis init --dry-run` | Preview scaffold diffs | No |
+| `metis init --apply --yes` | Apply approved scaffold changes | Yes |
+| `metis rollback <id>` | Restore files from rollback metadata | Yes |
+| `metis evolve --dry-run` | Propose small updates to existing candidates | No |
+| `metis tui` | Run the terminal-first review workflow | Only after confirmation |
+| `metis gui --preview` | Export a static read-only dashboard | Writes the requested HTML file |
 
-Runtime stays zero-dependency CommonJS on Node.js 18 or newer.
+Runtime is zero-dependency CommonJS on Node.js 18 or newer.
 
-## GUI Preview (Read-Only)
+## TUI And GUI
 
-The first GUI release is a static HTML export. It does not start a localhost server and has no apply/rollback controls.
+Run the guided terminal workflow:
+
+```bash
+node bin/metis.js tui --fixture test/fixtures/mixed-agent-project --script test/fixtures/tui/dry-run.txt
+```
+
+Export a static review dashboard:
 
 ```bash
 node bin/metis.js gui --preview --fixture test/fixtures/mixed-agent-project --out /tmp/metis-preview.html
 ```
 
-Open the printed path in a browser to review evidence, candidates, safety audit, diff preview, rollback ledger, and saved proposal summaries. The dashboard supports search/filter/detail and in-browser redacted JSON export (no project writes).
+The dashboard supports search, filters, detail views, and redacted JSON export.
+It is read-only and does not include mutation controls.
 
-## Evolve Proposals
+## Generated Files
 
-```bash
-node bin/metis.js evolve --dry-run --fixture test/fixtures/mixed-agent-project
-node bin/metis.js evolve --save-proposal --yes --fixture test/fixtures/mixed-agent-project
-node bin/metis.js proposal list --fixture test/fixtures/mixed-agent-project
-node bin/metis.js proposal inspect <id> --fixture test/fixtures/mixed-agent-project
-node bin/metis.js proposal accept <id> --dry-run --fixture test/fixtures/mixed-agent-project
-```
+`init --dry-run` can propose changes for:
 
-See [docs/PROPOSALS.md](docs/PROPOSALS.md) for the full lifecycle. TUI uses `save-proposal --yes` and `proposal-list` after `plan`.
-
-## Troubleshooting
-
-See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) and [docs/MIGRATION.md](docs/MIGRATION.md).
-
-## PCA Compatibility
-
-`pca` remains a deprecated alias for one release:
-
-```bash
-node bin/pca.js scan --fixture test/fixtures/mixed-agent-project
-```
-
-Migration mapping:
-
-| Before | After |
+| Path | Role |
 | --- | --- |
-| `pca scan` | `metis scan` |
-| `pca init --dry-run` | `metis init --dry-run` |
-| `.pca/evidence/index.json` | `.metis/evidence/index.json` |
-| `pca-<timestamp>` rollback ids | `metis-<timestamp>` rollback ids |
+| `AGENTS.md` | Codex project guidance |
+| `CLAUDE.md` | Claude Code project guidance |
+| `.cursor/rules/personal-agent.mdc` | Cursor project rules |
+| `.metis/evidence/index.json` | Redacted local evidence index |
 
-Metis reads legacy `.pca` evidence and rollback records when `.metis` artifacts are absent.
-
-## Generated Artifacts
-
-`init --dry-run` proposes diffs for:
-
-- `CLAUDE.md`
-- `AGENTS.md`
-- `.cursor/rules/personal-agent.mdc`
-- `.metis/evidence/index.json`
-
-Generated sections use:
+Generated sections are wrapped with stable markers:
 
 ```text
 <!-- METIS:BEGIN -->
 <!-- METIS:END -->
 ```
 
-Existing `<!-- PCA:BEGIN -->` sections are migrated to a single METIS managed section. Manual content outside markers is preserved.
-
-## Evidence Sources
-
-| Source | Handling |
-| --- | --- |
-| Claude Code | `CLAUDE.md`, `.claude/settings.json`, `.claude/mcp.json`, `.claude/hooks/**`, `.claude/skills/**` |
-| Codex | root and nested `AGENTS.md`, `.codex/config.json`, `.codex/config.toml`, `.codex/sessions/**` inventory |
-| Project | `package.json` scripts, `Makefile`, `README.md`, `docs/`, common lockfiles |
-
-History content is not read by default. `--include-history` reads only bounded session snippets from the selected root, applies redaction first, and stores only redacted excerpts.
+Manual content outside those markers is preserved.
 
 ## Safety Boundary
 
-- No accounts, cloud service, API key, or package install required.
-- No remote calls or telemetry in core or first-release UI workflows.
-- No hook or skill execution.
-- No symlink traversal.
-- No raw secret display.
-- No silent transcript reading.
-- TUI apply requires typing `APPLY METIS` after audit passes.
-- GUI preview is read-only; no apply/rollback mutation controls.
-- `init --apply --yes` writes only whitelisted scaffold paths and creates rollback metadata first.
-- High-risk evidence blocks generation/apply.
+| Boundary | Guarantee |
+| --- | --- |
+| Local first | No accounts, API keys, remote calls, or telemetry in core workflows. |
+| Review first | Scan, plan, and dry-run do not mutate target scaffold files. |
+| Explicit apply | TUI apply requires typing `APPLY METIS`; CLI apply requires an apply flag. |
+| Whitelisted writes | Apply writes only known scaffold/artifact paths. |
+| Secret handling | Secret-like values, private paths, and risky evidence are redacted or blocked. |
+| Reversible changes | Rollback metadata is created before scaffold writes. |
 
-## Non-Goals
+## Documentation
 
-- No chat runtime or cloud sync.
-- No model gateway or remote backend.
-- No automatic self-evolution or silent writes.
-- No GUI apply button in the first release.
+- [Architecture](docs/ARCHITECTURE.md)
+- [Product-grade baseline](docs/PRODUCT-GRADE.md)
+- [Proposal lifecycle](docs/PROPOSALS.md)
+- [Migration notes](docs/MIGRATION.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
+- [Release process](docs/RELEASE.md)
+- [Security policy](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Development
 
@@ -186,24 +155,19 @@ npm run check
 npm run smoke:install
 npm run qa:product
 npm test
-node --check bin/metis.js
-node --check bin/pca.js
-find lib -name '*.js' -print -exec node --check {} \;
-find test -name '*.js' -print -exec node --check {} \;
 ```
 
-TUI scripted QA:
+Local QA commands may generate ignored evidence under `.omo/`. Those artifacts
+are useful for release checks but are not meant to be committed.
 
-```bash
-node bin/metis.js tui --fixture test/fixtures/mixed-agent-project --script test/fixtures/tui/dry-run.txt
-```
+## Non-Goals
 
-GUI preview QA:
-
-```bash
-node bin/metis.js gui --preview --fixture test/fixtures/mixed-agent-project --out /tmp/metis-preview.html
-```
+- No hosted account layer.
+- No model gateway.
+- No automatic self-evolution.
+- No silent transcript reading.
+- No mutation controls in the static dashboard.
 
 ## License
 
-MIT License. See `LICENSE`.
+MIT License. See [LICENSE](LICENSE).
