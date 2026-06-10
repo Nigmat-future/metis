@@ -2,7 +2,7 @@
 
 ## Summary
 
-Metis (`metis`) turns local AI coding-agent evidence into a reviewable, reversible personal agent scaffold. It supports Claude Code, Codex, Cursor rule output, and project command evidence without requiring accounts, hosted processing, runtime dependencies, or telemetry. Beyond producing rules, Metis can also drive the agent CLIs (Claude Code, Codex, OpenCode, Cursor) as local subprocesses on explicit confirmation.
+Metis (`metis`) turns local AI coding-agent evidence into a reviewable, reversible personal agent scaffold. It supports Claude Code, Codex, Cursor rule output, and project command evidence without requiring accounts, hosted processing, runtime dependencies, or telemetry. It also learns from the corrections you repeat: explicit, redacted signals captured by hand (`metis note`) or harvested on request from local agent transcripts and git history (`metis learn`). Beyond producing rules, Metis can also drive the agent CLIs (Claude Code, Codex, OpenCode, Cursor) as local subprocesses on explicit confirmation.
 
 Metis is deliberately personal and small: a calm local review room for repeated AI coding corrections, not a hosted memory product, model gateway, or workflow takeover. The product should help developers keep rules short, private, reviewable, and reversible across tools.
 
@@ -22,6 +22,8 @@ The usable MVP includes:
 - explicit apply with `--apply --yes` or TUI `APPLY METIS` confirmation
 - rollback from `.metis/rollback/<id>.json` with legacy `.pca` read compatibility
 - proposal-only evolution with `evolve --dry-run`
+- correction capture: `metis note "<correction>"` records one repeated correction by hand; `metis learn --source <claude|git|all>` previews (`--dry-run`) or captures (`--yes`) corrections from local Claude transcripts and git revert history
+- frequency-weighted candidates: a correction repeated across sessions scores higher and climbs from document-only toward a generate decision
 - read-only GUI static HTML preview (no localhost server)
 - `pca` compatibility alias for one release
 - fixture-driven tests for happy paths, invalid args, redaction, no writes, apply/rollback, symlink root rejection, UI canary redaction, and remote-call static checks
@@ -46,7 +48,8 @@ Metis can drive installed agent CLIs as local subprocesses, mirroring a per-agen
 - LLM calls
 - cloud sync
 - telemetry
-- full transcript understanding
+- full transcript understanding (Metis classifies correction signals only; it does not model conversations)
+- silent or background transcript reading (transcripts are read only when you run `metis learn`, never automatically)
 - automatic permissions or hook enablement
 - silent self-evolution
 - GUI apply/rollback controls in first release
@@ -88,6 +91,19 @@ As a developer, I can run `metis gui --preview` and open a read-only HTML dashbo
 ### Evolve
 
 As a developer, I can run `metis evolve --dry-run` to compare current evidence with `.metis/evidence/index.json` (or legacy `.pca` index).
+
+### Corrections
+
+As a developer, I can capture the corrections I keep repeating and let frequency decide which become rules.
+
+Acceptance criteria:
+
+- `metis note "<correction>"` appends one redacted record to `.metis/corrections/log.jsonl` only when the text classifies as a correction (negation, re-instruction, or undo)
+- secret-like values are redacted before they reach the log
+- `metis learn --source <claude|git|all> --dry-run` previews discovered corrections and writes nothing
+- `metis learn ... --yes` appends de-duplicated corrections to the log
+- a correction repeated four or more times reaches a `generate` decision in `plan`; a one-off stays `document-only`
+- transcripts are read only on explicit `learn` invocation, never in the background
 
 ## Verification
 

@@ -117,6 +117,9 @@ node bin/metis.js rollback <rollback-id> --fixture <project-root>
 | `metis doctor` | Check environment and artifact health. | No |
 | `metis scan` | Gather local evidence. | No |
 | `metis plan` | Print candidate rules. | No |
+| `metis note "<correction>"` | Capture one repeated correction (redacted, local). | Appends to corrections log |
+| `metis learn --dry-run` | Preview corrections found in local transcripts or git history. | No |
+| `metis learn --yes` | Capture discovered corrections into the redacted log. | Appends to corrections log |
 | `metis init --dry-run` | Preview scaffold diffs. | No |
 | `metis init --apply --yes` | Apply approved scaffold changes. | Yes |
 | `metis rollback <id>` | Restore files from rollback metadata. | Yes |
@@ -179,6 +182,32 @@ Execution is opt-in and explicit: every run requires `--dry-run` (preview only) 
 you already trust, and passes an agent's skip-confirmation flag only when you add
 `--yolo`. Point Metis at a specific binary with `METIS_DRIVER_BIN_<AGENT>` when needed.
 
+## Learn From Repeated Corrections
+
+The sharpest rules come from the lessons you keep repeating to your agent. Metis
+captures those corrections explicitly, never by watching you in the background.
+
+```bash
+# Record one correction by hand the moment it happens:
+node bin/metis.js note "don't edit generated files directly"
+
+# Or harvest corrections you already made, from sources you choose:
+node bin/metis.js learn --source git --dry-run      # revert/undo commits (local, read-only)
+node bin/metis.js learn --source claude --dry-run    # your Claude Code transcripts for this project
+node bin/metis.js learn --source all --yes           # capture from every source
+```
+
+Metis classifies a turn as a correction when it negates ("don't / stop / 不要"),
+re-instructs ("actually / I said / 我说过"), or undoes ("revert / 撤销") prior work.
+Every captured line is redacted before it touches the log. Frequency is the
+signal: a correction seen once stays documentation-only, while one repeated
+across sessions climbs toward a generated rule. Review the result with
+`metis plan` and apply it like any other candidate.
+
+Transcript reading is strictly opt-in: nothing is read until you run
+`metis learn --source claude` (or `all`), and the corrections log lives locally
+at `.metis/corrections/log.jsonl`.
+
 ## Generated Targets
 
 `init --dry-run` can propose scaffold changes for:
@@ -210,6 +239,7 @@ Metis treats agent instructions as production infrastructure.
 | Explicit apply | CLI apply requires apply flags; TUI apply requires typing `APPLY METIS`. |
 | Whitelisted writes | Apply writes only known scaffold and artifact paths. |
 | Secret handling | Secret-like values, private paths, prompt-injection markers, and risky evidence are redacted or blocked. |
+| Explicit learning | Corrections are captured only by `metis note` or an explicit `metis learn`; transcripts are never read in the background, and every record is redacted before it lands in the log. |
 | Rollback before write | Restore metadata is created before scaffold mutation. |
 | Explicit drive | `metis run` launches a local agent CLI only after a `--dry-run` preview and an explicit `--yes`; Metis sends nothing over the network. |
 
@@ -255,7 +285,7 @@ are useful for release checks but are not meant to be committed.
 - No hosted account layer.
 - No model gateway.
 - No automatic self-evolution.
-- No silent transcript reading.
+- No silent transcript reading. Transcripts are read only when you run `metis learn`.
 - No mutation controls in the static dashboard.
 
 ## License
